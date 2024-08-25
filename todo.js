@@ -23,7 +23,7 @@ function readTodos() {
 }
 
 // Utility function to write todos to the file
-function writeTodos(todos){
+function writeTodos(todos) {
     fs.writeFileSync(todosFile, JSON.stringify(todos, null, 2));
 }
 
@@ -38,7 +38,7 @@ program.command('add <todo>')
     .description('add command will add tasks in todo')
     .action((todo) => {
         const todos = readTodos();
-        todos.push({ task: todo, done: false});
+        todos.push({ task: todo, done: false });
         writeTodos(todos);
         term.bold.cyan(`Added: `).bold.yellow(`"${todo}"`);
     });
@@ -53,5 +53,56 @@ program.command('delete <index>')
         term.bold.red(`Deleted: `).bold.yellow(`"${del[0].task}"`)
     });
 
+// Mark as done
+program.command('done <index>')
+    .description('Mark a todo as done by its index')
+    .action((index) => {
+        const todos = readTodos();
+        if (todos[index]) {
+            todos[index].done = true;
+            writeTodos(todos);
+            term.bold.brightGreen(`Marked as done: `).bold.brightCyan(`"${todos[index].task}"`);
+        }
+        else {
+            term.bold.red('Todo Not Found');
+        }
+    });
+
+// Edit todo
+program.command('edit <index> <newTodo>')
+    .description('Edit todo by index and replacing the old task with new task')
+    .action((index, newTodo) => {
+        const todos = readTodos();
+        if (todos[index]) {
+            const oldTodo = todos[index].task;
+            todos[index].task = newTodo;
+            writeTodos(todos);
+            term.bold.cyan(`Todo Edited: `).bold.red(`"${oldTodo}"`).bold.cyan(` to `).bold.green(`"${newTodo}"`);
+        }
+        else {
+            term.bold.red(`Todo not found`);
+        }
+    });
+
+// List all todo
+program.command('list')
+    .description('List all todo tasks')
+    .action(() => {
+        const todos = readTodos();
+        if (todos.lenght === 0) {
+            term.bold.red('No todos found');
+        }
+        else {
+            todos.forEach((todo, index) => {
+                let status;
+                if (todo.done) {
+                    status = 'X'; // Mark as done
+                } else {
+                    status = ' '; // Not done
+                }
+                term.bold.magenta(`${index}. ${todo.task} [${status}]\n`);
+            });
+        }
+    });
 
 program.parse();
