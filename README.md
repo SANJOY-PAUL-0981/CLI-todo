@@ -12,3 +12,8 @@ Commands:
 ```bash
 node todo.js
 ```
+
+## Installation
+```bash
+npm i tososp
+```
