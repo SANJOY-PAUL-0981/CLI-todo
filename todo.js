@@ -40,7 +40,7 @@ program.command('add <todo>')
         const todos = readTodos();
         todos.push({ task: todo, done: false });
         writeTodos(todos);
-        term.bold.cyan(`Added: `).bold.yellow(`"${todo}"`);
+        term.bold.cyan(`Added: `).bold.yellow(`"${todo}" \n`);
     });
 
 // Delete todo
@@ -50,7 +50,7 @@ program.command('delete <index>')
         const todos = readTodos();
         const del = todos.splice(index, 1);
         writeTodos(todos);
-        term.bold.red(`Deleted: `).bold.yellow(`"${del[0].task}"`)
+        term.bold.red(`Deleted: `).bold.yellow(`"${del[0].task}" \n`)
     });
 
 // Mark as done
@@ -61,10 +61,10 @@ program.command('done <index>')
         if (todos[index]) {
             todos[index].done = true;
             writeTodos(todos);
-            term.bold.brightGreen(`Marked as done: `).bold.brightCyan(`"${todos[index].task}"`);
+            term.bold.brightGreen(`Marked as done: `).bold.brightCyan(`"${todos[index].task}" \n`);
         }
         else {
-            term.bold.red('Todo Not Found');
+            term.bold.red('Todo Not Found \n');
         }
     });
 
@@ -77,10 +77,10 @@ program.command('edit <index> <newTodo>')
             const oldTodo = todos[index].task;
             todos[index].task = newTodo;
             writeTodos(todos);
-            term.bold.cyan(`Todo Edited: `).bold.red(`"${oldTodo}"`).bold.cyan(` to `).bold.green(`"${newTodo}"`);
+            term.bold.cyan(`Todo Edited: `).bold.red(`"${oldTodo}"`).bold.cyan(` to `).bold.green(`"${newTodo}" \n`);
         }
         else {
-            term.bold.red(`Todo not found`);
+            term.bold.red(`Todo not found \n`);
         }
     });
 
@@ -90,7 +90,7 @@ program.command('list')
     .action(() => {
         const todos = readTodos();
         if (todos.lenght === 0) {
-            term.bold.red('No todos found');
+            term.bold.red('No todos found \n');
         }
         else {
             todos.forEach((todo, index) => {
