@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+//this is a shebang
 
 const term = require('terminal-kit').terminal;
 
@@ -43,4 +44,14 @@ program.command('add <todo>')
     });
 
 // Delete todo
+program.command('delete <index>')
+    .description('Delete a todo with index number')
+    .action((index) => {
+        const todos = readTodos();
+        const del = todos.splice(index, 1);
+        writeTodos(todos);
+        term.bold.red(`Deleted: `).bold.yellow(`"${del[0].task}"`)
+    });
+
+
 program.parse();
