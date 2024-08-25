@@ -17,3 +17,13 @@ node todo.js
 ```bash
 npm i tososp
 ```
+
+## To Run This
+This will show the commnads: 
+```bash
+npx todosp
+```
+
+```bash
+npx todosp + <commands>
+```
